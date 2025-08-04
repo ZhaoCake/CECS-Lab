@@ -1,3 +1,6 @@
+# 设置默认的BASE_PORT（如果没有从外部传入）
+BASE_PORT ?= $(abspath ../../software/base-port)
+
 -include $(BASE_PORT)/script/riscv32.mk
 ifeq ($(MAKECMDGOALS),)
   MAKECMDGOALS  = image
@@ -38,6 +41,9 @@ COLOR_NONE  		= \033[0m
 
 # Compile C to object file
 ## Lab1 TODO: add C compile rule
+$(TAR_DIR)/%.o: %.c
+	@mkdir -p $(dir $@) && echo "$(COLOR_YELLOW)[CC]$(COLOR_NONE) $<"
+	@$(CC) $(CFLAGS) -c -o $@ $(realpath $<)
 
 # Compile assembly to object file
 $(TAR_DIR)/%.o: %.S
@@ -54,6 +60,8 @@ $(IMAGE).elf: $(OBJS) $(LIBS)
 	@echo "$(COLOR_YELLOW)[LD]$(COLOR_NONE) build/$(notdir $@)" 
 	@$(LD) $(LDFLAGS) -o $@ --start-group $(LINKAGE) --end-group
 ## Lab1 TODO: add disassemble command here
+	@echo "$(COLOR_YELLOW)[OBJDUMP]$(COLOR_NONE) build/$(notdir $(basename $@)).txt"
+	@$(OBJ_DUMP) -d $@ > $(basename $@).txt
 	
 	@$(OBJ_COPY) -O binary $@ $(IMAGE).bin
 

@@ -19,3 +19,7 @@
 $ riscv64-unknown-linux-gnu-gcc -c -march=rv32g -mabi=ilp32 -o test.o test.s
 ```
 才对。
+
+## 8/4
+
+

@@ -1,6 +1,6 @@
 
 # make ar
-CROSS_COMPILE := riscv64-unknown-linux-gnu-
+CROSS_COMPILE := /home/zhaocake/WorkSpaces/RiscV/CECS-Lab/../riscv64-multilib/bin/riscv32-unknown-elf-
 AR = $(CROSS_COMPILE)ar
 CC = $(CROSS_COMPILE)gcc
 AS = $(CROSS_COMPILE)gcc
